@@ -1,0 +1,18 @@
+module Enumerable
+  def my_map (&block)
+    result = []
+    self.each do |element|
+    result <<
+    block.call(element)
+    end
+    result
+  end
+
+  def my_select(&block)
+    result = []
+    self.each do |element|
+      result << element if block.call(element) == true
+    end
+    result
+  end
+end
