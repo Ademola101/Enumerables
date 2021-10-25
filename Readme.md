@@ -9,7 +9,7 @@ Implenting our enumerable main methods of implemeting will help in understanding
 
 ### About the Project
 
-The code contains ten enumerables methods
+The code contains ten enumerables methods in Enumerable module
 
 * my_select
 * my_any?
