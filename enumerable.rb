@@ -33,19 +33,21 @@ module Enumerable
     end
   end
 
-  def my_all?(parameter = nil)
-    to_a.my_each do |each|
-      if block_given?
-        return false unless yield each
-      elsif parameter.instance_of? Class
-        return false unless each.is_a? parameter
-      else
-        return false unless parameter.nil? ? each : none_nil?(parameter, each)
-      end
+  def my_all?(collection)
+    i = 0
+    block_return_values = []
+    while i < collection.length
+      block_return_values << yield(collection[i])
+      i = i + 1
     end
-    true
+  
+    if block_return_values.include?(false)
+      false
+    else
+      true
+    end
   end
-
+  
   def my_any?
     my_each do |item|
       if block_given?
