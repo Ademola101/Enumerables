@@ -1,5 +1,3 @@
-# frozen_string_literal:true
-
 # ruby enumerable implemetation
 module Enumerable
   def my_map(&block)
