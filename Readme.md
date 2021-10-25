@@ -21,8 +21,6 @@ The code contains ten enumerables methods in Enumerable module
 * my_each_with_index
 * my_map
   
-As the name implies, the bubble sort method takes in an array as a argument and sort the array in ascending order. Additionally, the bubble sort by methods takes an array of strings as the argument, and sort the array according to the character in the string.
-
 ## Author
 
 * GitHub: [@Ademola101](https://github.com/Ademola101)
