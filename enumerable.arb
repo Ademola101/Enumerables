@@ -27,6 +27,14 @@ module Enumerable
     end
   end
 
+  def my_each_with_index
+    num = 0
+    each do |words|
+      yield(words, num)
+      num += 1
+    end
+  end
+
   def my_any?
     my_each do |item|
       if block_given?
