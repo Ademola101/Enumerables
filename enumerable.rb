@@ -9,6 +9,8 @@ module Enumerable
     result
   end
 
+  
+
   def my_select(&block)
     result = []
     each do |element|
@@ -31,6 +33,19 @@ module Enumerable
       yield(words, num)
       num += 1
     end
+  end
+
+  def my_all?(parameter = nil)
+    to_a.my_each do |each|
+      if block_given?
+        return false unless yield each
+      elsif parameter.instance_of? Class
+        return false unless each.is_a? parameter
+      else
+        return false unless parameter.nil? ? each : none_nil?(parameter, each)
+      end
+    end
+    true
   end
 
   def my_any?
