@@ -8,7 +8,7 @@ module Enumerable
     end
     result
   end
-  
+
   def my_select(&block)
     result = []
     each do |element|
