@@ -1,90 +1,96 @@
-# ruby enumerable implemetation
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
 module Enumerable
-  def my_map(&block)
-    result = []
-    each do |element|
-      result <<
-        block.call(element)
+  class Array
+    def my_map(&block)
+      result = []
+      each do |element|
+        result <<
+          block.call(element)
+      end
+      result
     end
-    result
-  end
 
-  def my_select(&block)
-    result = []
-    each do |element|
-      result << element if block.call(element) == true
+    def my_select(&block)
+      result = []
+      each do |element|
+        result << element if block.call(element) == true
+      end
+      result
     end
-    result
-  end
 
-  def my_each
-    i = 0
-    while i < size
-      yield self[i]
-      i += 1
-    end
-  end
-
-  def my_each_with_index
-    num = 0
-    each do |words|
-      yield(words, num)
-      num += 1
-    end
-  end
-
-  def my_all?(collection)
-    i = 0
-    block_return_values = []
-    while i < collection.length
-      block_return_values << yield(collection[i])
-      i += 1
-    end
-    if block_return_values.include?(false)
-      false
-    else
-      true
-    end
-  end
-
-  def my_any?
-    my_each do |item|
-      if block_given?
-        return true if yield item
-      elsif item
-        return true
+    def my_each
+      i = 0
+      while i < size
+        yield self[i]
+        i += 1
       end
     end
-    false
-  end
 
-  def my_count(arg = nil)
-    sum = 0
+    def my_each_with_index
+      num = 0
+      each do |words|
+        yield(words, num)
+        num += 1
+      end
+    end
+    
+    def my_each
     if block_given?
-      my_each { |a| sum += 1 if yield(a) }
-    elsif arg.nil?
-      my_each { sum += 1 }
-    else
-      my_each { sum += 1 if a == arg }
+      i = 0 
+      while i < self.size
+        yield(self[i])
+        i += 1
+        end
+      end
     end
-    sum
-  end
-
-  def my_none?
-    my_each do |item|
-      return false if block_given? && yield(item) || !block_given? && item
+    puts [1,2,3].my_each()
+    def my_all?(*args)
+      if !args[0].nil?
+        my_each { |item| return true unless args[0] == item }
+      elsif block_given?
+        my_each { |item| return false unless yield(item) }
+      elsif args.instance_of?(Class)
+        my_each { |item| return false if item != args }
+      elsif args.instance_of?(Regexp)
+        my_each { |item| return false unless args.match(item) }
+      else
+        my_each { |item| return false if item == args }
+      end
+      false
     end
-    true
-  end
+    puts my_all?([1,2,3])
 
-  def my_inject(accumulator, &block)
-    each do |element|
-      accumulator = block.call(accumulator, element)
+    
+    def my_count(param = nil)
+      count = 0
+      if !param.nil?
+        my_each { |item| count += 1 if item == param }
+      elsif block_given?
+        my_each { |item| count += 1 if yield(item) }
+      else
+        my_each { count += 1 }
+      end
+      count
     end
-    accumulator
-  end
 
-  def multiply_els(arr)
-    arr.my_inject { |sum, num| sum * num }
-  end
-end
+    def my_none?
+      my_each do |item|
+        return false if block_given? && yield(item) || !block_given? && item
+      end
+      true
+    end
+
+    def my_inject(accumulator, &block)
+      each do |element|
+        accumulator = block.call(accumulator, element)
+      end
+      accumulator
+    end
+
+    rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+    def multiply_els(arr)
+      arr.my_inject { |sum, num| sum * num }
+    end
+    d
