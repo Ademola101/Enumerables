@@ -39,7 +39,7 @@ module Enumerable
       my_each { |item| return false if args[0] == item }
     elsif block_given?
       my_each { |item| return true if item }
-    elsif args.instance_of?(Class)f
+    elsif args.instance_of?(Class)
       my_each { |_item| return true if items.instance_of?(args) == args }
     elsif args.instance_of?(Regexp)
       my_each { |item| return true if args.match(item) }
@@ -48,7 +48,6 @@ module Enumerable
     end
     true
   end
-
 
   def my_all?(*args)
     if !args[0].nil?
@@ -64,7 +63,7 @@ module Enumerable
     end
     false
   end
-  
+
   def my_count(param = nil)
     count = 0
     if !param.nil?
@@ -79,22 +78,46 @@ module Enumerable
 
   def my_none?
     my_each do |item|
-      return false if block_given? && yield(item) || !block_given? && item
+      return false if (block_given? && yield(item)) || (!block_given? && item)
     end
     true
   end
 
-  def my_inject(accumulator, &block)
+  def my_inject(accumulator = nil, operation = nil, &block)
+    raise ArgumentError, 'you must provide an operation or a block' if accumulator.nil? && operation.nil? && block.nil?
+
+    raise ArgumentError, 'you must provide either an operation symbol or a block, not both' if operation && block
+
+    if operation.nil? && block.nil?
+      operation = accumulator
+      accumulator = nil
+    end
+
+    block = case operation
+            when Symbol
+              ->(acc, value) { acc.send(operation, value) }
+            when nil
+              block
+            else
+              raise ArgumentError, 'the operation provided must be a symbol'
+            end
+
+    if accumulator.nil?
+      ignore_first = true
+      accumulator = first
+    end
+
+    index = 0
+
     each do |element|
-      accumulator = block.call(accumulator, element)
+      accumulator = block.call(accumulator, element) unless ignore_first && index == 0
+      index += 1
     end
     accumulator
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-  def multiply_els(arr)
-    arr.my_inject { |sum, num| sum * num }
-  end
-  puts [1, 2i, 3.14].my_all?(Numeric)
-  puts [nil, true, 99].my_all?
+def multiply_els(arr)
+  arr.my_inject { |sum, num| sum * num }
+end
