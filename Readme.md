@@ -1,7 +1,6 @@
 # Ruby implementation of enumerables methods
 Ruby enumerables offer large numbers of functions or methods that are helpful in data structures and algorithms. 
-Implementing our enumerable main methods of implementing will help in understanding how the enumerable methods works. 
-
+Implementing my own enumerable methods will help in understanding how these enumerable methods work and how to put them into good use.
 ## Built with
 
 * Ruby
