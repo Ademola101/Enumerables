@@ -18,7 +18,7 @@ module Enumerable
     result
   end
 
-  def my_each(&block)
+  def my_each
     i = 0
     while i < size
       yield self[i]
