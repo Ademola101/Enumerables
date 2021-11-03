@@ -18,12 +18,13 @@ module Enumerable
     result
   end
 
-  def my_each
+  def my_each(&block)
     i = 0
     while i < size
       yield self[i]
       i += 1
     end
+    i
   end
 
   def my_each_with_index
@@ -117,6 +118,7 @@ module Enumerable
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
 
 def multiply_els(arr)
   arr.my_inject { |sum, num| sum * num }
