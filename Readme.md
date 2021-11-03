@@ -7,7 +7,7 @@ Implementing my own enumerable methods will help in understanding how these enum
 
 ### About the Project
 
-The code contains ten enumerables methods in Enumerable module
+The code contains the following ten enumerables methods in Enumerable module:
 
 * my_select
 * my_any?
