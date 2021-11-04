@@ -50,19 +50,30 @@ module Enumerable
     true
   end
 
-  def my_all?(*args)
-    if !args[0].nil?
-      my_each { |item| return true unless args[0] == item }
-    elsif block_given?
-      my_each { |item| return false unless yield(item) }
-    elsif args.instance_of?(Class)
-      my_each { |item| return false if item != args }
-    elsif args.instance_of?(Regexp)
-      my_each { |item| return false unless args.match(item) }
+  def my_all?(args = nil)
+    return true if (instance_of?(Array) && count.zero?) || (!block_given? &&
+     args.nil? && !include?(nil))
+    return false unless block_given? || !args.nil?
+    item = true
+    if instance_of?(Array)
+      my_each do |a|
+        if block_given?
+          item = false unless yield(a)
+        elsif args.instance_of?(Regexp)
+          item = false unless a.match(args)
+        elsif args.class <= Numeric
+          item = false unless a == args
+        else
+          item = false unless a.class <= args
+        end
+        break unless item
+      end
     else
-      my_each { |item| return false if item == args }
+      my_each do |key, value|
+        item = false unless yield(key, value)
+      end
     end
-    false
+    item
   end
 
   def my_count(param = nil)
@@ -77,9 +88,19 @@ module Enumerable
     count
   end
 
-  def my_none?(*args)
-    my_each do |item|
-      return false if (block_given? && yield(item)) || (!block_given? && item)
+  
+  def my_none?(args = nil, &block)
+    my_any?(args, &block)
+    if block_given?
+      my_each { |item| return false if yield item }
+    elsif args.nil?
+      my_each { |item| return false if item }
+    elsif args.instance_of?(Class)
+      my_each { |item| return false if item.instance_of?(args) }
+    elsif args.instance_of?(Regexp)
+      my_each { |item| return false if args.match(item) }
+    else
+      my_each { |item| return false if item == args }
     end
     true
   end
@@ -123,13 +144,10 @@ def multiply_els(arr)
   arr.my_inject { |sum, num| sum * num }
 end
 
-puts %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
-puts %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
-puts %w{ant bear cat}.none?(/d/)                        #=> true
-puts [1, 3.14, 42].my_none?(Float)                         #=> false
-puts [].my_none?                                           #=> true
-puts [nil].my_none?                                        #=> true
-puts [nil, false].my_none?                                 #=> true
-puts [nil, false, true].my_none?                           #=> false
+ary = [1, 2, 4, 2]
+puts ary.my_count               #=> 4
+puts ary.my_count(2)            #=> 2
+puts ary.my_count{ |x| x%2==0 } #=> 3
+
 
 
