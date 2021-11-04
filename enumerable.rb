@@ -54,6 +54,7 @@ module Enumerable
     return true if (instance_of?(Array) && count.zero?) || (!block_given? &&
      args.nil? && !include?(nil))
     return false unless block_given? || !args.nil?
+
     item = true
     if instance_of?(Array)
       my_each do |a|
@@ -88,7 +89,6 @@ module Enumerable
     count
   end
 
-  
   def my_none?(args = nil, &block)
     my_any?(args, &block)
     if block_given?
