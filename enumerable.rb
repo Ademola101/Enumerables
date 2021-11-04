@@ -143,11 +143,3 @@ end
 def multiply_els(arr)
   arr.my_inject { |sum, num| sum * num }
 end
-
-ary = [1, 2, 4, 2]
-puts ary.my_count               #=> 4
-puts ary.my_count(2)            #=> 2
-puts ary.my_count{ |x| x%2==0 } #=> 3
-
-
-
