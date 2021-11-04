@@ -77,7 +77,7 @@ module Enumerable
     count
   end
 
-  def my_none?
+  def my_none?(*args)
     my_each do |item|
       return false if (block_given? && yield(item)) || (!block_given? && item)
     end
@@ -122,3 +122,14 @@ end
 def multiply_els(arr)
   arr.my_inject { |sum, num| sum * num }
 end
+
+puts %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
+puts %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
+puts %w{ant bear cat}.none?(/d/)                        #=> true
+puts [1, 3.14, 42].my_none?(Float)                         #=> false
+puts [].my_none?                                           #=> true
+puts [nil].my_none?                                        #=> true
+puts [nil, false].my_none?                                 #=> true
+puts [nil, false, true].my_none?                           #=> false
+
+
