@@ -35,19 +35,19 @@ module Enumerable
     end
   end
 
-  def my_any?(*args)
-    if !args[0].nil?
-      my_each { |item| return false if args[0] == item }
-    elsif block_given?
+  def my_any?(args = nil)
+    if block_given?
+      my_each { |item| return true if yield item }
+    elsif args.nil?
       my_each { |item| return true if item }
-    elsif args.instance_of?(Class)
-      my_each { |_item| return true if items.instance_of?(args) == args }
     elsif args.instance_of?(Regexp)
-      my_each { |item| return true if args.match(item) }
+      my_each { |item| return true if item.match(args) }
+    elsif args.instance_of?(Class)
+      my_each { |item| return true if item.class != args || item.class.superclass == args }
     else
-      my_each { |item| return true if item == args }
+      my_each { |item| return true if args == item }
     end
-    true
+    false
   end
 
   def my_all?(args = nil)
@@ -143,3 +143,4 @@ end
 def multiply_els(arr)
   arr.my_inject { |sum, num| sum * num }
 end
+
