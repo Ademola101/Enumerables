@@ -39,4 +39,9 @@ describe 'Enumerable' do
       expect(arr.my_any? { |i| i > 10 }).to eql false
     end
   end
+  describe '#my_all?' do
+    it 'return true if all the items in the array pass the expression in the block' do
+      expect(arr.my_all? { |i| i < 6 }).to eql true
+    end
+  end
 end
