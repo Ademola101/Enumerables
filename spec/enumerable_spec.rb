@@ -2,7 +2,6 @@ require_relative '../enumerable'
 describe 'Enumerable' do
   let(:arr) { [*(1..5)] }
   let(:arr_dup) { [1, 2, 2, 2, 5, 6] }
-  let(:hash_let) { {'cat' => 0, 'dog' => 1, 'wombat' => 2} }
   describe '#my_map' do
     it 'should return new array of each items according to the result of the block' do
       expect(arr.my_map { |i| i * i }).to eql [1, 4, 9, 16, 25]
@@ -47,6 +46,11 @@ describe 'Enumerable' do
   describe '#my_none' do
     it 'return true if none of the items in the array satisfy the condition in the block' do
       expect(arr.my_none? { |i| i == 8 }).to eql true
+    end
+  end
+  describe '#my_inject' do
+    it 'return the summation of of all the items in the array' do
+      expect(arr.my_inject(:+)).to eql 15
     end
   end
 end
