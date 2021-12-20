@@ -44,4 +44,9 @@ describe 'Enumerable' do
       expect(arr.my_all? { |i| i < 6 }).to eql true
     end
   end
+  describe '#my_none' do
+    it 'return true if none of the items in the array satisfy the condition in the block' do
+      expect(arr.my_none? { |i| i == 8 }).to eql true
+    end
+  end
 end
