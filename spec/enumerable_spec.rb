@@ -22,7 +22,7 @@ describe 'Enumerable' do
   end
   describe '#my_each' do
     it 'should loop through all the element in the array and perform the action in the block if the block is given'do
-      expect(arr.my_each { puts 'hello world' }).to eql (5.times { puts 'hello world' })
+      expect(arr.my_each { |i| i}).to eql [1,2,3,4,5]
     end
   end
   describe '#my_each_with-index' do
