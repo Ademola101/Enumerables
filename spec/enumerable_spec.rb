@@ -62,4 +62,3 @@ describe 'Enumerable' do
     end
   end
 end
-# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
