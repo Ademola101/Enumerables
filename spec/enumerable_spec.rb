@@ -21,7 +21,7 @@ describe 'Enumerable' do
     end
   end
   describe '#my_each' do
-    it 'should loop through all the element in the array and perform the action in the block if the block is given' do 
+    it 'should loop through all the element in the array and perform the action in the block if the block is given' do
       j = []
       expect(arr.my_each { |i| i }).to eql 5
     end
@@ -55,6 +55,11 @@ describe 'Enumerable' do
   describe '#my_inject' do
     it 'return the summation of of all the items in the array' do
       expect(arr.my_inject(:+)).to eql 15
+    end
+  end
+  describe 'my_multiply' do
+    it 'should return the multiplication of the item in the array' do
+      expect(multiply_els(arr)).to eql 120
     end
   end
 end
