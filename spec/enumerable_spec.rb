@@ -22,7 +22,6 @@ describe 'Enumerable' do
   end
   describe '#my_each' do
     it 'should loop through all the element in the array and perform the action in the block if the block is given' do
-      j = []
       expect(arr.my_each { |i| i }).to eql 5
     end
   end
@@ -63,3 +62,4 @@ describe 'Enumerable' do
     end
   end
 end
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
