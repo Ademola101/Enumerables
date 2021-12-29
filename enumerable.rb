@@ -143,3 +143,6 @@ end
 def multiply_els(arr)
   arr.my_inject { |sum, num| sum * num }
 end
+
+arr = [1,2,3]
+puts arr.my_each { |i| arr[i]}

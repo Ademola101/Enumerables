@@ -21,13 +21,17 @@ describe 'Enumerable' do
     end
   end
   describe '#my_each' do
-    it 'should loop through all the element in the array and perform the action in the block if the block is given'do
-      expect(arr.my_each { |i| i}).to eql [1,2,3,4,5]
+    it 'should loop through all the element in the array and perform the action in the block if the block is given' do 
+      j = []
+      expect(arr.my_each { |i| i }).to eql 5
     end
   end
   describe '#my_each_with-index' do
     it 'should return the item and the index of an array' do
-      expect(arr.my_each_with_index { |item, index| puts "#{index},#{item}" }).to eql (puts(0,1))
+      hash = {}
+      arr.my_each_with_index { |item, index| hash[item] = index }
+      my_hash = { 1 => 0, 2 => 1, 3 => 2, 4 => 3, 5 => 4 }
+      expect(my_hash).to eql hash
     end
   end
   describe '#my_any?' do
